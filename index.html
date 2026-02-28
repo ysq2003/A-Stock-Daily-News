@@ -14,6 +14,7 @@
   *{margin:0;padding:0;box-sizing:border-box;}
   body{background:var(--dark);color:var(--text);font-family:'Noto Serif SC',serif;min-height:100vh;}
   .container{max-width:900px;margin:0 auto;padding:40px 24px 80px;}
+
   .header{border-bottom:1px solid var(--border);padding-bottom:28px;margin-bottom:36px;display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:16px;}
   .brand{display:flex;flex-direction:column;gap:4px;}
   .brand-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--red);letter-spacing:4px;}
@@ -23,20 +24,25 @@
   .date-display{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-dim);line-height:1.8;}
   .market-status{display:inline-block;font-size:10px;padding:2px 8px;font-family:'JetBrains Mono',monospace;letter-spacing:2px;margin-top:4px;}
   .status-pre{background:rgba(212,168,67,.15);color:var(--gold);border:1px solid rgba(212,168,67,.3);}
-  .status-open{background:rgba(39,174,96,.15);color:var(--green);border:1px solid rgba(39,174,96,.3);}
+  .status-open{background:rgba(192,57,43,.15);color:var(--red-light);border:1px solid rgba(192,57,43,.3);}
+  .status-noon{background:rgba(138,130,120,.15);color:var(--text-dim);border:1px solid rgba(138,130,120,.2);}
   .status-closed{background:rgba(138,130,120,.15);color:var(--text-dim);border:1px solid rgba(138,130,120,.2);}
-  .worker-panel{background:var(--dark2);border:1px solid var(--border);border-left:3px solid var(--gold);padding:16px 24px;margin-bottom:28px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+  .status-bid{background:rgba(52,152,219,.15);color:#3498db;border:1px solid rgba(52,152,219,.3);}
+
+  /* ★ 修改3：隐藏Worker地址，只显示运行状态 */
+  .worker-panel{background:var(--dark2);border:1px solid var(--border);border-left:3px solid var(--gold);padding:14px 20px;margin-bottom:28px;display:flex;align-items:center;gap:12px;}
   .worker-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);flex-shrink:0;animation:blink 2s ease-in-out infinite;}
   @keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
   .worker-info{flex:1;}
-  .worker-title{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gold);letter-spacing:3px;margin-bottom:4px;}
-  .worker-url{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-dim);}
-  .worker-model{display:inline-block;background:rgba(212,168,67,.1);border:1px solid rgba(212,168,67,.25);color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:10px;padding:2px 8px;margin-top:6px;}
+  .worker-title{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gold);letter-spacing:3px;margin-bottom:3px;}
+  .worker-model{display:inline-block;background:rgba(212,168,67,.1);border:1px solid rgba(212,168,67,.25);color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:10px;padding:2px 8px;margin-top:4px;}
+
   .focus-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid var(--border);}
   .focus-label{font-size:11px;color:var(--text-dim);font-family:'JetBrains Mono',monospace;letter-spacing:2px;display:flex;align-items:center;margin-right:4px;white-space:nowrap;}
   .chip{padding:5px 14px;font-size:12px;font-family:'Noto Serif SC',serif;border:1px solid var(--border);background:transparent;color:var(--text-dim);cursor:pointer;transition:all .15s;border-radius:2px;}
   .chip:hover{border-color:var(--text-dim);color:var(--text);}
   .chip.active{background:rgba(192,57,43,.15);border-color:var(--red);color:var(--red-light);}
+
   .controls{display:flex;gap:12px;margin-bottom:32px;flex-wrap:wrap;}
   .btn{padding:12px 28px;font-family:'Noto Serif SC',serif;font-size:14px;font-weight:600;cursor:pointer;border:none;letter-spacing:2px;transition:all .2s;}
   .btn-primary{background:var(--red);color:#fff;}
@@ -44,6 +50,7 @@
   .btn-primary:disabled{background:var(--dark4);color:var(--text-dim);cursor:not-allowed;transform:none;box-shadow:none;}
   .btn-secondary{background:transparent;color:var(--text-dim);border:1px solid var(--border);}
   .btn-secondary:hover{border-color:var(--text-dim);color:var(--text);}
+
   .loading-zone{display:none;padding:60px 0;text-align:center;}
   .loading-zone.show{display:block;}
   .loading-ticker{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-dim);letter-spacing:3px;margin-bottom:24px;animation:pulse 1.5s ease-in-out infinite;}
@@ -51,18 +58,22 @@
   .progress-bar{width:300px;height:2px;background:var(--dark4);margin:0 auto;overflow:hidden;}
   .progress-fill{height:100%;background:linear-gradient(90deg,var(--red),var(--gold));animation:slide 1.5s ease-in-out infinite;}
   @keyframes slide{0%{transform:translateX(-100%) scaleX(.5)}100%{transform:translateX(400%) scaleX(.5)}}
+
   .error-box{display:none;background:rgba(192,57,43,.08);border:1px solid rgba(192,57,43,.3);padding:20px 24px;margin-bottom:24px;font-size:13px;line-height:1.8;color:var(--red-light);word-break:break-all;}
   .error-box.show{display:block;}
   .output-zone{display:none;}
   .output-zone.show{display:block;}
+
   .briefing-header{background:var(--red);padding:16px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
   .briefing-header-title{font-size:13px;font-weight:700;letter-spacing:4px;color:#fff;}
   .briefing-meta{font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(255,255,255,.7);}
+
   .sentiment-row{display:flex;align-items:center;gap:12px;padding:14px 24px;background:var(--dark2);border:1px solid var(--border);border-top:none;margin-bottom:1px;}
   .sentiment-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-dim);letter-spacing:2px;min-width:60px;}
   .sentiment-bar{flex:1;height:4px;background:var(--dark4);border-radius:2px;overflow:hidden;}
   .sentiment-fill{height:100%;border-radius:2px;}
   .sentiment-value{font-family:'JetBrains Mono',monospace;font-size:12px;min-width:36px;text-align:right;}
+
   .section{border:1px solid var(--border);border-top:none;animation:fadeIn .5s ease forwards;opacity:0;}
   @keyframes fadeIn{to{opacity:1}}
   .section-header{padding:14px 24px;background:var(--dark2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;}
@@ -75,26 +86,34 @@
   .icon-watch{background:#e67e22;box-shadow:0 0 8px #e67e22;}
   .section-title{font-size:11px;letter-spacing:4px;color:var(--text-dim);font-family:'JetBrains Mono',monospace;}
   .section-body{padding:20px 24px;background:var(--dark);}
+
   .news-item{padding:14px 0;border-bottom:1px solid rgba(42,42,42,.6);display:flex;gap:16px;}
   .news-item:last-child{border-bottom:none;padding-bottom:0;}
   .news-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-dim);padding-top:2px;min-width:20px;}
   .news-content{flex:1;line-height:1.9;font-size:14px;}
   .news-tag{display:inline-block;font-size:10px;padding:1px 6px;border-radius:2px;margin-right:6px;font-family:'JetBrains Mono',monospace;letter-spacing:1px;vertical-align:middle;}
-  .tag-positive{background:rgba(39,174,96,.15);color:var(--green);border:1px solid rgba(39,174,96,.3);}
-  .tag-negative{background:rgba(192,57,43,.15);color:var(--red-light);border:1px solid rgba(192,57,43,.3);}
+
+  /* ★ 修改1：利好=红色 利空=绿色（中国规则）*/
+  .tag-positive{background:rgba(192,57,43,.15);color:var(--red-light);border:1px solid rgba(192,57,43,.3);}
+  .tag-negative{background:rgba(39,174,96,.15);color:var(--green);border:1px solid rgba(39,174,96,.3);}
   .tag-neutral{background:rgba(138,130,120,.1);color:var(--text-dim);border:1px solid rgba(138,130,120,.2);}
+  .tag-warning{background:rgba(155,89,182,.15);color:#9b59b6;border:1px solid rgba(155,89,182,.3);}
+
   .watch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1px;background:var(--border);}
   .watch-card{background:var(--dark);padding:14px 16px;}
   .watch-name{font-size:12px;color:var(--text-dim);margin-bottom:4px;}
   .watch-signal{font-size:13px;font-weight:600;}
+  /* ★ 强多/偏多=红色，强空/偏空=绿色（中国规则）*/
   .signal-bull{color:var(--red-light);}
   .signal-bear{color:var(--green);}
   .signal-neutral{color:var(--text-dim);}
+
   .editor-note{background:var(--dark2);border:1px solid var(--border);border-top:none;padding:16px 24px;display:flex;gap:16px;align-items:flex-start;margin-bottom:2px;}
   .editor-note-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gold);letter-spacing:2px;min-width:60px;padding-top:2px;}
   .editor-note-text{font-size:14px;line-height:1.9;color:var(--text);}
   .disclaimer{font-size:11px;color:var(--text-dim);font-family:'JetBrains Mono',monospace;line-height:1.8;margin-top:16px;padding:12px 16px;border:1px solid var(--border);background:var(--dark2);}
   .raw-content{white-space:pre-wrap;font-family:'Noto Serif SC',serif;font-size:14px;line-height:2;color:var(--text);padding:24px;background:var(--dark);border:1px solid var(--border);border-top:none;word-break:break-all;}
+
   ::-webkit-scrollbar{width:4px;}
   ::-webkit-scrollbar-track{background:var(--dark2);}
   ::-webkit-scrollbar-thumb{background:var(--border);}
@@ -114,12 +133,12 @@
     </div>
   </div>
 
+  <!-- ★ 修改3：不显示Worker地址 -->
   <div class="worker-panel">
     <div class="worker-dot"></div>
     <div class="worker-info">
-      <div class="worker-title">// CLOUDFLARE WORKER · 已就绪</div>
-      <div class="worker-url">https://odd-limit-8ff9.ysq4006.workers.dev/</div>
-      <div class="worker-model">MODEL · qwen/qwen3.5-397b-a17b · NVIDIA NIM</div>
+      <div class="worker-title">// AI 引擎 · 已就绪</div>
+      <div class="worker-model">MODEL · qwen/qwen3.5-397b-a17b</div>
     </div>
   </div>
 
@@ -142,26 +161,64 @@
 
   <div class="error-box" id="errorBox"></div>
   <div class="loading-zone" id="loadingZone">
-    <div class="loading-ticker">正在连接 Worker · Qwen 分析中，请稍候...</div>
+    <div class="loading-ticker">正在连接 AI 引擎 · Qwen 分析中，请稍候...</div>
     <div class="progress-bar"><div class="progress-fill"></div></div>
   </div>
   <div class="output-zone" id="outputZone"></div>
 
 </div>
 <script>
-const WORKER_URL = 'https://odd-limit-8ff9.ysq4006.workers.dev/';
+const WORKER_URL ='https://ai-gateway.ysq4006.workers.dev/';
 const MODEL      = 'qwen/qwen3.5-397b-a17b';
 
-function updateHeader(){
-  const now=new Date();
-  document.getElementById('dateDisplay').innerHTML=
-    now.toLocaleDateString('zh-CN',{year:'numeric',month:'2-digit',day:'2-digit',weekday:'long'})+'<br>'+now.toLocaleTimeString('zh-CN');
-  const h=now.getHours(),m=now.getMinutes(),el=document.getElementById('marketStatus');
-  if(h>=9&&h<15){el.textContent='交易时段';el.className='market-status status-open';}
-  else if(h===7||h===8||(h===9&&m<30)){el.textContent='盘前时段';el.className='market-status status-pre';}
-  else{el.textContent='休市中';el.className='market-status status-closed';}
+// ★ 修改2：精准的A股交易时段判断
+function getMarketStatus(){
+  const now = new Date();
+  const day = now.getDay(); // 0=周日 6=周六
+  const h = now.getHours();
+  const m = now.getMinutes();
+  const total = h * 60 + m; // 转换为分钟方便比较
+
+  // 周末
+  if(day === 0 || day === 6){
+    return { text:'周末休市', cls:'status-closed' };
+  }
+  // 工作日各时段（分钟）
+  // 集合竞价 9:15-9:30
+  if(total >= 9*60+15 && total < 9*60+30){
+    return { text:'集合竞价', cls:'status-bid' };
+  }
+  // 上午交易 9:30-11:30
+  if(total >= 9*60+30 && total < 11*60+30){
+    return { text:'交易中 · 上午', cls:'status-open' };
+  }
+  // 午间休市 11:30-13:00
+  if(total >= 11*60+30 && total < 13*60){
+    return { text:'午间休市', cls:'status-noon' };
+  }
+  // 下午交易 13:00-15:00
+  if(total >= 13*60 && total < 15*60){
+    return { text:'交易中 · 下午', cls:'status-open' };
+  }
+  // 盘前 7:00-9:15
+  if(total >= 7*60 && total < 9*60+15){
+    return { text:'盘前时段', cls:'status-pre' };
+  }
+  // 其他时间（收盘后/盘前前）
+  return { text:'已收盘', cls:'status-closed' };
 }
-updateHeader(); setInterval(updateHeader,1000);
+
+function updateHeader(){
+  const now = new Date();
+  document.getElementById('dateDisplay').innerHTML =
+    now.toLocaleDateString('zh-CN',{year:'numeric',month:'2-digit',day:'2-digit',weekday:'long'}) +
+    '<br>' + now.toLocaleTimeString('zh-CN');
+  const status = getMarketStatus();
+  const el = document.getElementById('marketStatus');
+  el.textContent = status.text;
+  el.className = 'market-status ' + status.cls;
+}
+updateHeader(); setInterval(updateHeader, 1000);
 
 document.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>c.classList.toggle('active')));
 function getTopics(){ return [...document.querySelectorAll('.chip.active')].map(c=>c.dataset.topic); }
@@ -172,36 +229,24 @@ function clearOutput(){
   document.getElementById('errorBox').classList.remove('show');
 }
 
-// ★ 核心：从响应数据里穷举所有可能的路径取 content
 function extractContent(data){
-  // 标准 OpenAI 格式
   if(data?.choices?.[0]?.message?.content) return data.choices[0].message.content;
-  // 部分 worker 会直接返回 content 字段
-  if(typeof data?.content === 'string' && data.content) return data.content;
-  // 有些返回 text
-  if(typeof data?.text === 'string' && data.text) return data.text;
-  // 有些返回 result
-  if(typeof data?.result === 'string' && data.result) return data.result;
-  // choices 但 content 在不同位置
+  if(typeof data?.content==='string'&&data.content) return data.content;
+  if(typeof data?.text==='string'&&data.text) return data.text;
+  if(typeof data?.result==='string'&&data.result) return data.result;
   if(data?.choices?.[0]?.text) return data.choices[0].text;
   if(data?.choices?.[0]?.content) return data.choices[0].content;
-  // 最后兜底：把整个 data 序列化，从里面搜 JSON
   return JSON.stringify(data);
 }
 
-// JSON 截断自动修复
 function fixTruncatedJson(str){
-  str = str.trim();
-  // 去掉结尾多余逗号
-  str = str.replace(/,\s*$/, '');
-  // 如果字符串没闭合
-  const quotes = (str.match(/(?<!\\)"/g)||[]).length;
-  if(quotes % 2 !== 0) str += '"';
-  // 补全数组和对象
-  const arrDiff = (str.match(/\[/g)||[]).length - (str.match(/\]/g)||[]).length;
-  const objDiff = (str.match(/\{/g)||[]).length - (str.match(/\}/g)||[]).length;
-  for(let i=0;i<arrDiff;i++) str += ']';
-  for(let i=0;i<objDiff;i++) str += '}';
+  str=str.trim().replace(/,\s*$/,'');
+  const quotes=(str.match(/(?<!\\)"/g)||[]).length;
+  if(quotes%2!==0) str+='"';
+  const arrDiff=(str.match(/\[/g)||[]).length-(str.match(/\]/g)||[]).length;
+  const objDiff=(str.match(/\{/g)||[]).length-(str.match(/\}/g)||[]).length;
+  for(let i=0;i<arrDiff;i++) str+=']';
+  for(let i=0;i<objDiff;i++) str+='}';
   return str;
 }
 
@@ -227,68 +272,50 @@ async function generateBriefing(){
 tag值域：利好、利空、中性、警示。signal值域：强多、偏多、中性、偏空、强空。`;
 
   try{
-    const response = await fetch(WORKER_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: MODEL,
-        messages: [{ role: 'user', content: prompt }],
-        max_tokens: 4096,
-        temperature: 0.20,
-        top_p: 0.70,
-        stream: false
+    const response=await fetch(WORKER_URL,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:MODEL,
+        messages:[{role:'user',content:prompt}],
+        max_tokens:4096,
+        temperature:0.20,
+        top_p:0.70,
+        stream:false
       })
     });
 
-    const rawText = await response.text();
-
+    const rawText=await response.text();
     if(!response.ok){
       let msg=`HTTP ${response.status}`;
-      try{ const e=JSON.parse(rawText); msg=e.detail||e.message||e.error||msg; }catch(_){}
+      try{const e=JSON.parse(rawText);msg=e.detail||e.message||e.error||msg;}catch(_){}
       throw new Error(msg);
     }
 
-    // 解析响应
     let data;
-    try{ data=JSON.parse(rawText); }
-    catch(e){ 
-      // Worker 直接返回了字符串而不是 JSON
-      data = { content: rawText };
-    }
+    try{data=JSON.parse(rawText);}
+    catch(e){data={content:rawText};}
 
-    // ★ 用穷举方式取 content
-    const content = extractContent(data);
-
-    // 去掉 <think> 推理块（Qwen 思考模式）
-    const cleaned = content
+    const content=extractContent(data);
+    const cleaned=content
       .replace(/<think>[\s\S]*?<\/think>/g,'')
-      .replace(/```json/g,'')
-      .replace(/```/g,'')
+      .replace(/```json/g,'').replace(/```/g,'')
       .trim();
 
-    // 尝试解析 JSON
     let briefing;
     try{
-      const m = cleaned.match(/\{[\s\S]*\}/);
-      let jsonStr = m ? m[0] : cleaned;
-      // 先直接解析
-      try{
-        briefing = JSON.parse(jsonStr);
-      }catch(_){
-        // 失败则尝试修复截断
-        jsonStr = fixTruncatedJson(jsonStr);
-        briefing = JSON.parse(jsonStr);
-      }
+      const m=cleaned.match(/\{[\s\S]*\}/);
+      let jsonStr=m?m[0]:cleaned;
+      try{briefing=JSON.parse(jsonStr);}
+      catch(_){briefing=JSON.parse(fixTruncatedJson(jsonStr));}
     }catch(e){
-      // 解析彻底失败，显示原始内容
       renderRaw(cleaned||content);
       return;
     }
-
     renderBriefing(briefing);
 
   }catch(e){
-    showError('生成失败：' + e.message);
+    showError('生成失败：'+e.message);
   }finally{
     btn.disabled=false; btn.textContent='▶ 启动 · 生成今日要闻';
     document.getElementById('loadingZone').classList.remove('show');
@@ -303,7 +330,13 @@ function showError(msg){
   document.getElementById('generateBtn').textContent='▶ 启动 · 生成今日要闻';
 }
 
-function tagClass(t){ return t==='利好'?'tag-positive':t==='利空'?'tag-negative':'tag-neutral'; }
+// ★ 修改1：利好=红色 利空=绿色 警示=紫色
+function tagClass(t){
+  if(t==='利好') return 'tag-positive';
+  if(t==='利空') return 'tag-negative';
+  if(t==='警示') return 'tag-warning';
+  return 'tag-neutral';
+}
 function signalClass(s){ return ['强多','偏多'].includes(s)?'signal-bull':['强空','偏空'].includes(s)?'signal-bear':'signal-neutral'; }
 
 function renderNews(items){
@@ -317,7 +350,7 @@ function renderNews(items){
 
 function renderBriefing(b){
   const s=b.sentiment||{};
-  const bull=s.bull||50,bear=s.bear||30;
+  const bull=s.bull||50, bear=s.bear||30;
   const html=`
     <div class="briefing-header">
       <div class="briefing-header-title">今日盘前要闻 · ${b.date||''}</div>
